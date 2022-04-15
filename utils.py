@@ -16,6 +16,7 @@ from model import *
 # Return two data csv and all images data path.
 from tqdm import tqdm
 from sklearn.metrics import confusion_matrix, classification_report
+import matplotlib.pyplot as plt
 
 def create_dataset(dir_zip):
     image_types = ['.png', '.jpg', '.jpeg', '.tiff', '.bmp']
@@ -70,7 +71,7 @@ def create_dataset(dir_zip):
 
 def test_train_split(df_dir):
     df = pd.read_csv(df_dir)
-    train_df, test_df = train_test_split(df, test_size=0.1)
+    train_df, test_df = train_test_split(df, test_size=0.2)
     parent = Path(df_dir).parent
     train_df_path = os.path.join(os.path.expanduser('~'), parent, 'TRAIN_DF.csv')
     test_df_path = os.path.join(os.path.expanduser('~'), parent, 'TEST_DF.csv')
@@ -208,11 +209,10 @@ def plot_cm(labels, predictions, p=0.5):
   plt.ylabel('Actual label')
   plt.xlabel('Predicted label')
 
-  print('Legitimate Transactions Detected (True Negatives): ', cm[0][0])
-  print('Legitimate Transactions Incorrectly Detected (False Positives): ', cm[0][1])
-  print('Fraudulent Transactions Missed (False Negatives): ', cm[1][0])
-  print('Fraudulent Transactions Detected (True Positives): ', cm[1][1])
-  print('Total Fraudulent Transactions: ', np.sum(cm[1]))
+  print('True Negatives: ', cm[0][0])
+  print('False Positives: ', cm[0][1])
+  print('False Negatives: ', cm[1][0])
+  print('True Positives: ', cm[1][1])
 
   print("_______________________________________________________________________")
   print(classification_report(labels, predictions))
