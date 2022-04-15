@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 import time
 import random
 import seaborn as sns
-import numoy as np
+import numpy as np
 from model import *
 # Creating csv files for all image with their nm_classes. Classes will be added as folder name of image .
 # Getting all images into a one folder
