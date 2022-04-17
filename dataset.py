@@ -50,7 +50,7 @@ class CustomDataGenerator:
                 batch_size=self.batch_size,
                 shuffle=True,
                 seed=42,
-                class_mode="sparse"
+                class_mode="categorical"
             )
             print("Training Dataset : ")
             train_generator = train_datagen.flow_from_dataframe(
@@ -62,7 +62,7 @@ class CustomDataGenerator:
                 batch_size=self.batch_size,
                 shuffle=True,
                 seed=42,
-                class_mode="sparse"
+                class_mode="categorical"
             )
             return train_generator, val_generator, test_generator
 

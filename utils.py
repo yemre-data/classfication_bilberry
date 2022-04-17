@@ -159,7 +159,7 @@ def model_selection(train_generator,validation_generator,im_size):
         model_ = model_.forward()
         base_learning_rate = 0.0001
         model_.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rate),
-                      loss='sparse_categorical_crossentropy',
+                      loss='categorical_crossentropy',
                       metrics=['accuracy'])
         history = model_.fit(train_generator, epochs=10, validation_data=validation_generator,)
 
