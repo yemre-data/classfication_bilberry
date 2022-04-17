@@ -148,20 +148,20 @@ def create_class_weight(labels_dict, n_classes):
         x += 1
     return class_weight
 
-def model_selection(train_generator,validation_generator,im_size,nm_classes):
+def model_selection(train_generator,validation_generator,im_size):
     model_dictionary = {m[0]: m[1] for m in inspect.getmembers(tf.keras.applications, inspect.isfunction)}
     model_dictionary.pop('NASNetLarge')
     model_benchmarks = {'model_name': [], 'num_model_params': [] ,'validation_accuracy': []}
     for model_name, model in tqdm(model_dictionary.items()):
 
-        model_ = Custom_Model(model_name,im_size,nm_classes)
+        model_ = Custom_Model(model_name,im_size)
         # custom modifications on top of pre-trained model
         model_ = model_.forward()
         base_learning_rate = 0.0001
         model_.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rate),
                       loss='binary_crossentropy',
                       metrics=['accuracy'])
-        history = model_.fit(train_generator, epochs=3, validation_data=validation_generator,)
+        history = model_.fit(train_generator, epochs=10, validation_data=validation_generator,)
 
         model_benchmarks['model_name'].append(model_name)
         model_benchmarks['num_model_params'].append(model_.count_params())
