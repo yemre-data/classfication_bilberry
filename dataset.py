@@ -37,7 +37,7 @@ class CustomDataGenerator:
                 target_size=self.target_size,
                 batch_size=self.batch_size,
                 shuffle=False,
-                class_mode="binary"
+                class_mode="categorical"
             )
             print("Validation Dataset : ")
             val_generator = val_datagen.flow_from_dataframe(
@@ -50,7 +50,7 @@ class CustomDataGenerator:
                 batch_size=self.batch_size,
                 shuffle=True,
                 seed=42,
-                class_mode="binary"
+                class_mode="categorical"
             )
             print("Training Dataset : ")
             train_generator = train_datagen.flow_from_dataframe(
@@ -62,7 +62,7 @@ class CustomDataGenerator:
                 batch_size=self.batch_size,
                 shuffle=True,
                 seed=42,
-                class_mode="binary"
+                class_mode="categorical"
             )
             return train_generator, val_generator, test_generator
 

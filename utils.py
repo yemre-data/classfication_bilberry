@@ -159,7 +159,7 @@ def model_selection(train_generator,validation_generator,im_size):
         model_ = model_.forward()
         base_learning_rate = 0.0001
         model_.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rate),
-                      loss='binary_crossentropy',
+                      loss='sparse_categorical_crossentropy',
                       metrics=['accuracy'])
         history = model_.fit(train_generator, epochs=10, validation_data=validation_generator,)
 
@@ -201,8 +201,8 @@ def metrics_visualization(history):
     return plt.show()
 
 
-def plot_cm(labels, predictions, p=0.5):
-  cm = confusion_matrix(labels, predictions > p)
+def plot_cm(labels, predictions):
+  cm = confusion_matrix(labels, predictions)
   plt.figure(figsize=(5,5))
   sns.heatmap(cm, annot=True, fmt="d")
   plt.title('Confusion matrix @{:.2f}'.format(p))
