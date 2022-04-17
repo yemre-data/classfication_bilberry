@@ -201,8 +201,8 @@ def metrics_visualization(history):
     return plt.show()
 
 
-def plot_cm(labels, predictions):
-  cm = confusion_matrix(labels, predictions)
+def plot_cm(labels, predictions, p=0.5):
+  cm = confusion_matrix(labels, predictions > p)
   plt.figure(figsize=(5,5))
   sns.heatmap(cm, annot=True, fmt="d")
   plt.title('Confusion matrix @{:.2f}'.format(p))
