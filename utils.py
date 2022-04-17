@@ -17,7 +17,7 @@ from model import *
 from tqdm import tqdm
 from sklearn.metrics import confusion_matrix, classification_report
 import matplotlib.pyplot as plt
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 def create_dataset(dir_zip):
     image_types = ['.png', '.jpg', '.jpeg', '.tiff', '.bmp']
@@ -154,13 +154,15 @@ def model_selection(train_generator,validation_generator,im_size):
     model_dictionary.pop('NASNetLarge')
     model_benchmarks = {'model_name': [], 'num_model_params': [] ,'validation_accuracy': []}
     earlystopping = EarlyStopping(monitor='accuracy', mode='max', verbose=1, patience=15, min_delta=0.001)
+    checkpointer = ModelCheckpoint(filepath="/content/drive/MyDrive/Bilberry/batch_mark.hdf5", verbose=1,
+                                   save_best_only=True)
     for model_name, model in tqdm(model_dictionary.items()):
 
         model_ = Custom_Model(model_name,im_size)
         # custom modifications on top of pre-trained model
         model_ = model_.forward()
         base_learning_rate = 0.0001
-        model_.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rate,callbacks=[earlystopping]),
+        model_.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rate,callbacks=[earlystopping,checkpointer]),
                       loss='categorical_crossentropy',
                       metrics=['accuracy'])
 
