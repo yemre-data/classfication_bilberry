@@ -71,7 +71,7 @@ def create_dataset(dir_zip):
 
 def test_train_split(df_dir):
     df = pd.read_csv(df_dir)
-    train_df, test_df = train_test_split(df, test_size=0.1)
+    train_df, test_df = train_test_split(df, test_size=0.15)
     parent = Path(df_dir).parent
     train_df_path = os.path.join(os.path.expanduser('~'), parent, 'TRAIN_DF.csv')
     test_df_path = os.path.join(os.path.expanduser('~'), parent, 'TEST_DF.csv')
